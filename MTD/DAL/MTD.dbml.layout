@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="MTD">
+  <DataContextMoniker Name="/MTDDataContext" />
+  <nestedChildShapes>
+    <classShape Id="fb5402bf-6bd7-4f9a-80fb-82dac579d5a4" absoluteBounds="3, 0.625, 2, 1.3862939453125">
+      <DataClassMoniker Name="/MTDDataContext/tblRole" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b4af9939-ba28-42a4-b7c5-750f12ab5f79" absoluteBounds="3.015, 1.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="53929f10-093b-47fb-8046-52c1a5e920b7" absoluteBounds="0.5, 0.5, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/MTDDataContext/tblAccount" />
+      <nestedChildShapes>
+        <elementListCompartment Id="65895442-d053-4112-925d-03827c95a33f" absoluteBounds="0.515, 0.96, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

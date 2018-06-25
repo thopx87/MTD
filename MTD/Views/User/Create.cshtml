@@ -1,0 +1,74 @@
+﻿@model MTD.Models.AccountModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+@section MainContent{
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="space-6">
+                        </div>
+                        <div class="position-relative">
+                            <div id="forgot-box" class="signup-box widget-box no-border visible">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header green lighter bigger">
+                                            <i class="ace-icon fa fa-users blue"></i>Tạo tài khoản mới!
+                                        </h4>
+                                        <div class="space-6">
+                                        </div>
+                                        @using (Html.BeginForm("Create", "User", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <fieldset>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                                                        @Html.ValidationMessageFor(m => m.Email)
+                                                        <i class="ace-icon fa fa-envelope"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+                                                        @Html.ValidationMessageFor(m => m.UserName)
+                                                        <i class="ace-icon fa fa-user"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu", @type="password" })
+                                                        @Html.ValidationMessageFor(m => m.Password)
+                                                        <i class="ace-icon fa fa-lock"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Xác nhận Mật khẩu", @type="password" })
+                                                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                                        <i class="ace-icon fa fa-retweet"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.ListRole, "Value", "Text"), new { @class = "form-control"})
+                                                </label>
+                                                <div class="clearfix">
+                                                    <a href="@Url.Action("ListAccount", "User")" class="width-45 pull-left btn btn-sm btn-primary">
+                                                        <i class="ace-icon fa fa-arrow-left"></i><span class="bigger-110">Quay lại danh sách</span> 
+                                                    </a>
+                                                    <button type="submit" id="btnRegister" class="width-45 pull-right btn btn-sm btn-success">
+                                                        <span class="bigger-110">Tạo tài khoản</span> <i class="ace-icon fa fa-plus">
+                                                        </i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

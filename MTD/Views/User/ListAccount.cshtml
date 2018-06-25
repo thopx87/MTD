@@ -1,0 +1,186 @@
+﻿@model MTD.Models.AccountModel
+@using MTD.Helper
+@{
+    ViewBag.Title = "User";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+@section MainContent{
+    <div class="main-content">
+        <div class="main-content-inner">
+            <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                <ul class="breadcrumb">
+					<li class="active red bigger-120">Quản lý thành viên</li><li class="active red bigger-120">Danh sách tài khoản</li>
+				</ul>
+                <!-- /.nav-search -->
+            </div>
+            <div class="page-content">
+                @using (Html.BeginForm("ListAccount", "User", FormMethod.Get))
+                {
+                <div class="page-header">
+                    <a href="javascript:void(0);" onclick="window.location.reload()" class="btnDefine btn btn-default"><i class="fa fa-refresh green m-xxs"></i>Cập nhật</a>
+                    <a href="@Url.Action("Create","User")" id="" class="btnDefine btn btn-default"><i class="fa fa-plus blue m-xxs"></i>Tạo mới</a>
+				</div>
+                    <div class="nav-search">
+
+                    </div>
+                <div class="row">
+                    <div id="modal-table" class="modal fade" tabindex="-1">
+                    </div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <table id="simple-table" class="table  table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="center">
+                                                ID
+                                            </th>
+                                            <th>
+                                                Username
+                                            </th>
+                                            <th style="max-width: 120px">
+                                                Email
+                                            </th>
+                                            <th style="max-width: 120px">
+                                                Ngày đăng ký
+                                            </th>
+                                            <th style="min-width: 120px">
+                                                Trạng thái hoạt động
+                                            </th>
+                                            <th>
+                                                Quyền hạn
+                                            </th>
+                                            <th>
+                                                Chức năng
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.ListAccount.Count > 0)
+                                        {
+                                            for (int i = 0; i < Model.ListAccount.Count; i++)
+                                            {
+                                                var account = Model.ListAccount[i];
+                                                <tr>
+                                                    <td class="center">
+                                                        <label class="pos-rel">
+                                                            @account.Id
+                                                        </label>
+                                                    </td>
+                                                    <td>
+                                                        <a href="@Url.Action("PersonalView", "User", new { area = "Admin", @id = @account.Id })">@account.UserName</a>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <label>
+                                                            @account.Email</label>
+                                                    </td>
+                                                    <td>
+                                                        <label>@account.Register_Date</label>
+                                                    </td>
+                                                    <td>
+                                                        <label>
+                                                            <input type="checkbox" name="Status" value="true" id="Status" @(account.State == 1?"checked":"") class="ace ace-switch ace-switch-3" onclick="return false;" />
+                                                            <span class="lbl"></span>
+                                                            <input name="lstUser[@(i)].Status" type="hidden" value="false" />
+                                                        </label>
+                                                    </td>
+                                                    <td style="width: 20%">
+                                                        @account.RoleText
+                                                    </td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" data-id="@account.Id" class="btnDefine btn btn-default delete-account"><i class="fa fa-trash-o red m-xxs"></i>Xóa</a>
+                                                        <a href="@Url.Action("UpdateAccount", "User", new { @Id = account.Id })" id="btnEdit" class="btnDefine btn btn-default"><i class="fa fa-edit blue m-xxs"></i>Sửa</a>
+                                                        <a href="javascript:void(0);" id="btnDetail" class="btnDefine btn btn-default"><i class="fa fa-info-circle blue m-xxs"></i>chi tiết</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <tr><td colspan="6">@Configs.ERROR_NOT_DATA</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                                @Html.Partial("_PagingPartial")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $('.show-details-btn').on('click', function (e) {
+            e.preventDefault();
+            $(this).closest('tr').next().toggleClass('open');
+            $(this).find(ace.vars['.icon']).toggleClass('fa-angle-double-down').toggleClass('fa-angle-double-up');
+        });
+
+        $("#checkAll").click(function () {
+            $(".check").prop('checked', $(this).prop('checked'));
+        });
+        function UpdateForRow(id) {
+            $("#selectedUser" + id).attr("checked", true);
+        }
+
+        $('#btnDeleteUsers').click(function () {
+            var numberUserChecked = $('input.select-user:checked').length;
+            if (numberUserChecked > 0) {
+                var arrUser = [];
+                $('input.select-user:checked').each(function () {
+                    arrUser.push($(this).val());
+                });
+                if (confirm('@Html.Raw(Configs.CONFIRM_DELETE_USERS)')) {
+                    $.ajax({
+                        url: '@Url.Action("DeleteMultiple", "User", new { area = "Admin" })',
+                        data: JSON.stringify({ usersDelete: arrUser }),
+                        contentType: 'application/json; charset=utf-8',
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false
+                    })
+                    .success(function (result) {
+                        if (result > 0) {
+                            alert('@Html.Raw(Configs.SUCCESS_DELETE)');
+                        } else {
+                            alert('@Html.Raw(Configs.ERROR_DELETE)');
+                        }
+                        window.location.reload(false);
+                    })
+                    .error(function (xhr, status) {
+                        alert(status);
+                    });
+                }
+            } else {
+                alert('@Html.Raw(Configs.ALERT_NOT_CHOICE)');
+            }
+        });
+
+        $('.delete-account').click(function () {
+            var accountId = $(this).attr("data-id");
+            if (confirm('@Html.Raw(Configs.CONFIRM_DELETE_USERS)')) {
+                $.ajax({
+                    url: '@Url.Action("DeleteAccount", "User")',
+                    data: JSON.stringify({ Id: accountId }),
+                    contentType: 'application/json; charset=utf-8',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false
+                })
+                    .success(function (result) {
+                        if (result > 0) {
+                            alert('@Html.Raw(Configs.SUCCESS_DELETE)');
+                        } else {
+                            alert('@Html.Raw(Configs.ERROR_DELETE)');
+                        }
+                        window.location.reload(false);
+                    })
+                    .error(function (xhr, status) {
+                        alert(status);
+                    });
+            }
+        });
+    </script>
+                }

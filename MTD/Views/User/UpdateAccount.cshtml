@@ -1,0 +1,65 @@
+﻿@model MTD.Models.AccountUpdateModel
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_ManagerLayout.cshtml";
+}
+
+@section MainContent{
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="space-6">
+                        </div>
+                        <div class="position-relative">
+                            <div id="forgot-box" class="signup-box widget-box no-border visible">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header green lighter bigger">
+                                            <i class="ace-icon fa fa-users blue"></i>Cập nhật tài khoản
+                                        </h4>
+                                        <div class="space-6">
+                                        </div>
+                                        @using (Html.BeginForm("UpdateAccount", "User", FormMethod.Post))
+                                        {
+                                            <fieldset>
+                                                @Html.HiddenFor(m=>m.Id)
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email"})
+                                                        <i class="ace-icon fa fa-envelope"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
+                                                        <i class="ace-icon fa fa-user"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    @Html.DropDownListFor(m => m.RoleId, new SelectList(Model.ListRole, "Value", "Text"), new { @class = "form-control"})
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <input type="checkbox" name="State" value="true" id="State" checked="@Model.State" class="ace ace-switch ace-switch-3"} />
+                                                            <span class="lbl"> &nbsp; &nbsp;Trạng thái hoạt động</span>
+                                                </label>
+                                                <div class="clearfix">
+                                                    <a href="@Url.Action("ListAccount", "User")" class="width-45 pull-left btn btn-sm btn-primary">
+                                                        <i class="ace-icon fa fa-arrow-left"></i><span class="bigger-110">Quay lại danh sách</span> 
+                                                    </a>
+                                                    <button type="submit" class="width-45 pull-right btn btn-sm btn-success">
+                                                        <span class="bigger-110">Cập nhật</span> <i class="ace-icon fa fa-plus">
+                                                        </i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

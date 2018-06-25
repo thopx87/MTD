@@ -1,0 +1,58 @@
+﻿@model MTD.Models.LoginModel
+@{
+    ViewBag.Title = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section MainContent{
+    <div class="main-container">
+        <div class="main-content">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="login-container">
+                        <div class="space-6">
+                        </div>
+                        <div class="position-relative">
+                            <div id="forgot-box" class="signup-box widget-box no-border visible">
+                                <div class="widget-body">
+                                    <div class="widget-main">
+                                        <h4 class="header green lighter bigger">
+                                            <i class="ace-icon fa fa-users blue"></i>Đăng nhập
+                                        </h4>
+                                        <div class="space-6">
+                                        </div>
+                                        @using (Html.BeginForm("Login", "User", FormMethod.Post))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <fieldset>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username / Email" })
+                                                        <i class="ace-icon fa fa-envelope"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    <span class="block input-icon input-icon-right">
+                                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu", @type = "password" })
+                                                        <i class="ace-icon fa fa-lock"></i></span>
+                                                </label>
+                                                <label class="block clearfix">
+                                                    @Html.EditorFor(m => m.Remember, new { @class = "ace" })
+                                                    <span class="lbl"> Remember Me</span>
+				                                </label>
+                                                <div class="clearfix">
+                                                    <button type="submit" id="btnLogin" class="width-65 pull-right btn btn-sm btn-success">
+                                                        <span class="bigger-110">Đăng nhập</span> <i class="ace-icon fa fa-arrow-right icon-on-right">
+                                                        </i>
+                                                    </button>
+                                                </div>
+                                            </fieldset>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

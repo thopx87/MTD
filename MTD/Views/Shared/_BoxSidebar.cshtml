@@ -1,0 +1,28 @@
+﻿@{int tabId = ViewBag.TabID == null ? 0 : (int)ViewBag.TabID;}
+<div id="sidebar" class="sidebar h-sidebar navbar-collapse collapse ace-save-state">
+    <ul class="nav nav-list">
+        <li class="hover @(tabId == 0?"active open":"")"><a href="@Url.Action("Index","Word")"><span
+            class="menu-text">Trang chủ </span></a><b class="arrow"></b></li>
+        <li class="hover @(tabId == 1?"active open":"")">
+            <a href="@Url.Action("Index", "Word", new { @DictType = 1 })" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle disabled ">
+                <span class="menu-text">Từ điển Anh - Việt</span>
+            </a>
+        </li>
+        <li class="hover @(tabId == 2?"active open":"")">
+            <a href="@Url.Action("Index", "Template1", new { @TransactionType =2})" class="dropdown-toggle">
+                <span class="menu-text">Từ điển Việt - Anh </span>
+            </a>
+        </li>
+        <li class="hover @(tabId == 3?"active open":"")"><a href="widgets.html"><span class="menu-text">Từ điển quân đội </span></a></li>
+        <li class="hover @(tabId == 4?"active open":"")"><a href="widgets.html"><span class="menu-text">Hỏi đáp </span></a></li>
+        <li class="hover @(tabId == 5?"active open":"")"><a href="widgets.html"><span class="menu-text">Liên hệ </span></a></li>
+    </ul>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".dropdown-toggle").click(function () {
+            var url = $(this).attr("href");
+            $(location).attr('href', url);
+        });
+    }); 
+</script>
